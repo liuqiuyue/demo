@@ -10,7 +10,6 @@ $(function () {
 
     function searchFormInit(form) {
         var word = form.keyword;
-
         //<!-- Search Form -->
         $(form).bind('submit', function (e) {
             // 自定义搜索按钮跳转 (input输入框如果存在该属性并且为空则忽略为空判断，直接跳转)
@@ -32,7 +31,6 @@ $(function () {
                 return false;
             }*/
         });
-
         function createSubmitArgs(name, value) {
             var _input = document.createElement('input');
             _input.type = 'hidden';
@@ -67,7 +65,6 @@ $(function () {
     /*
      * 搜索联想词
      */
-
     function IndexData(data) {
         if (!data) return;
         var i = 0;
@@ -83,7 +80,6 @@ $(function () {
             window.console && console.log('init index error');
         }
     }
-
     /**
      * 执行模板js代码
      * @param data
@@ -334,7 +330,7 @@ $(function () {
                 $(".J-header-search-input").blur();
             }
         }
-    });
+    }); 
 
     $(window).on('resize', function () {
         changeCoords();
