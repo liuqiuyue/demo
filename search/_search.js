@@ -176,7 +176,7 @@ $(function () {
     }
 
     function searchWords() {
-        url = '//keywordsuggestions.made-in-china.com/suggest/getEnProdSuggest.do?param=#param#&kind=5&ad=1&id=CROVSearchSuggest&count=10&ignoreCase=true&matchAnywhere=true&catflag=0&call=?';
+        url = 'xxx.codSuggest.do?param=#param#&kind=5&ad=1&id=CROVSearchSuggest&count=10&ignoreCase=true&matchAnywhere=true&catflag=0&call=?';
         url += '&_' + new Date().getTime();
         $.ajax({
             type: 'get',
