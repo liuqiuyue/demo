@@ -12,3 +12,15 @@ function _debounce() {
 }
 var myDebounce = _debounce();
 myDebounce(funcA);
+
+var resizeFlag = false;
+$(window).bind('resize', function() {
+    if (resizeFlag) {
+        return;
+    }
+    resizeFlag = true;
+    setTimeout(function(){
+        resizeFlag = false;
+    }, 200);
+   
+})
