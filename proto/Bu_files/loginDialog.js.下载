@@ -1,0 +1,62 @@
+ ;void function(){
+
+    //css @depend _dialog
+    //js  @depend jQuery artDialog
+
+    /** 
+    $('.J-login').click(function(){
+        loginDialog.open();
+        loginDialog.successCallback = function(data){
+            console.log('login success'+ data);
+        }
+    });
+    */
+    document.domain = 'crov.com';
+
+    var url = '//login.crov.com/asyncLogin';
+    var loginDialog = {
+        open: function(w){
+            var _this = this;
+            w = w ? w:390;
+            var openDialog = function () {
+                _this.dialog = new artDialog({
+                    title:'Log in to Crov',
+                    content:'<iframe id="ifr" src="'+ url +'" frameborder="0" width="'+ Number(w-20) +'" height="200"></iframe>',
+                    width: w,
+                    fixed: true,
+                    lock: true,
+                    resize: false,
+                    padding: '10px'
+                });
+            };
+            if(window.topLoginInfo){
+                topLoginInfo.getInfo(function(data){
+                    if(data.userName){
+                        window.location.reload();
+                    }else{
+                        openDialog()
+                    }
+                });
+            }else {
+                openDialog();
+            }
+
+        },
+        close: function(){
+            this.dialog && this.dialog.close();
+            topLoginInfo.request && topLoginInfo.request();
+        },
+        resize: function(h){
+            $(this.dialog.content()).find('iframe').height(h)
+        },
+        success: function(data){
+            this.close();
+            this.successCallback(data);
+        }
+    }
+
+    window.loginDialog = loginDialog;
+
+
+ }.call(this);
+ 

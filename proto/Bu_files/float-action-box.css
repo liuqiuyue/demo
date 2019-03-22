@@ -1,0 +1,199 @@
+.float-action-box {
+  width: 54px;
+  z-index: 10;
+  *padding-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+.float-action-box li {
+  position: relative;
+  border-top: 1px solid #e6ecf2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.float-action-box li:first-child {
+  border-top: none;
+}
+
+.float-action-box a {
+  display: block;
+  width: 54px;
+  height: 54px;
+  background-color: #FFF;
+  text-align: center;
+  font-family: 'Mic-icon';
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *display: inline;
+  *zoom: 1;
+  font-size: 32px;
+  line-height: 54px;
+  vertical-align: middle;
+  text-decoration: none !important;
+  vertical-align: middle;
+  color: #888;
+}
+
+.float-action-box a:hover {
+  color: #FFF;
+}
+
+.float-action-box a:hover {
+  background-color: #1470cc;
+}
+
+.float-action-box .f-contact {
+  background-position: 0 0;
+}
+
+.float-action-box .f-tm-on {
+  background-position: 0 -50px;
+}
+
+.float-action-box .f-tm-off {
+  background-position: 0 -50px;
+  background-color: #bfbfbf;
+}
+
+.float-action-box .f-tm-off:hover {
+  background-color: #a6a6a6;
+}
+
+.float-action-box .f-live-chat:before {
+  content: '\e015';
+}
+
+.float-action-box .f-help:before {
+  content: '\e08d';
+}
+
+.float-action-box .f-contact-buyer-service {
+  background-position: 0 -150px;
+}
+
+.float-action-box .f-survey {
+  background-position: 0 -200px;
+}
+
+.float-action-box .f-go-top:before {
+  content: '\e007';
+}
+
+.float-action-box .popup-wrap {
+  /*width: 0;*/
+  height: 54px;
+  position: absolute;
+  right: 60px;
+  top: -2px;
+  overflow: hidden;
+  opacity: 0;
+  transition: all .7s;
+}
+
+.float-action-box .popup-wrap.open {
+  opacity: 1;
+}
+
+.float-action-box .popup-wrap.open .popup {
+  display: table-cell;
+}
+
+.float-action-box .popup {
+  display: none;
+  vertical-align: middle;
+  height: 58px;
+  width: 220px;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.float-action-box .popup-box {
+  display: inline-block;
+  line-height: 1.5;
+  padding: 5px 10px;
+  position: relative;
+  white-space: nowrap;
+  border: 1px solid #ced3d9;
+  box-shadow: 1px 1.5px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  color: #555;
+  background: #fff;
+  text-align: left;
+  font-size: 14px;
+  *margin: 6px 10px 0 0;
+}
+
+.float-action-box .arrow {
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  width: 0;
+  height: 0;
+  margin-top: -6px;
+  border: 6px solid transparent;
+  border-left-color: #ccc;
+}
+
+.float-action-box .arrow-inner {
+  position: absolute;
+  right: -5px;
+  top: -6px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-left-color: #fff;
+}
+
+@media screen and (min-width: 320px) and (max-width: 1600px) {
+  .float-action-box {
+    width: 40px;
+    right: 10px !important;
+  }
+  .float-action-box a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 24px;
+  }
+  .float-action-box .popup-wrap {
+    height: 40px;
+    right: 45px;
+  }
+  .float-action-box .popup {
+    height: 40px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 1023px) {
+  .float-action-box {
+    bottom: 40px !important;
+  }
+  .float-action-box .help {
+    display: none;
+  }
+  .float-action-box .liveChat {
+    display: none;
+  }
+  .float-action-box li {
+    border-top: none;
+    box-shadow: none;
+  }
+  .float-action-box a {
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.3);
+  }
+  .float-action-box a:hover {
+    background: rgba(0, 0, 0, 0.6);
+  }
+  .float-action-box .popup-wrap {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=float-action-box.css.map */
