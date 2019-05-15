@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Black</title>
+    <link rel="stylesheet" href="dateSelect.css">
+</head>
+
+<body>
+    <div class="J-date-wrap"></div>
+    <div class="J-date-wrap1"></div>
+<script type="text/template" id="J-tmpl">
+        <div class="dateselect">
+            <div class="dateselect-item">
+                <select class="J-day" name="idDay">
+                    <option value="Day" select-css="hide">Day</option>
+                    {{ for(var i=0;i<31;i++){ }}
+                    <option value="{{-i+1}}" {{if(defDay==i+1){ }}selected="selected" {{ } }}>{{-i+1}}</option>
+                    {{ } }}
+                </select>
+            </div>
+            <div class="dateselect-item">
+                <select class="J-month" name="idMonth">
+                    <option value="Month" select-css="hide">Month</option>
+                    {{ for(var i=0;i<12;i++){ }}
+                    <option value="{{-i+1}}" {{if(defMonth==i+1){ }}selected="selected" {{ }
+                            }}>{{-i18n.monthShortVal[i]}}</option>
+                    {{ } }}
+                </select>
+        
+            </div>
+            <div class="dateselect-item">
+                <select class="J-year" name="idYear">
+                    <option value="Year" select-css="hide">Year</option>
+                    {{ for(var i=minYear;i<yearLength + minYear-1;i++){ }}
+                    <option value="{{-i}}" {{if(defYear==i){ }}selected="selected" {{ } }}>{{-i}}</option>
+                    {{ } }}
+                </select>
+            </div>
+        </div>
+</script>
+
+    <script type="text/javascript" src="/common/js/libs/jquery.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/common/js/libs/class.0.3.2.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="/Alexandria/js/global/global.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/common/js/assets/select2/select.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/common/js/assets/template/template.js" charset="utf-8"></script>
+    <script type="text/javascript" src="dateSelect.js" charset="utf-8"></script>
+
+    <script>
+        var myDate = new Date();
+        var dateSelector = new DateSelect({
+            wrap: ".J-date-wrap",
+            minYear: 2000,
+            maxYear: (myDate.getFullYear() + 1)
+        })
+
+        var dateSelector = new DateSelect({
+            wrap: ".J-date-wrap1",
+            defYear: myDate.getFullYear(),
+            defMonth: (myDate.getMonth() + 1),
+            defDay: myDate.getDate(),
+            minYear: 1990,
+            maxYear: (myDate.getFullYear() + 1)
+        })
+    </script>
+</body>
+
+</html>

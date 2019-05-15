@@ -1,0 +1,18 @@
+@import "/Alexandria/css/global/_global";
+
+@import "/common/css/lib/_input";
+@import "/common/css/lib/_select";
+ 
+
+.dateselect {
+    
+      @include clearfix;
+      .dateselect-item {
+        margin-right: 10px;
+        float: left;
+        &:last-of-type {
+          margin-right: 0;
+        }
+      }
+    }
+  
