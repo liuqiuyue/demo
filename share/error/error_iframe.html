@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <script src=".\tryCatch.js"></script> -->
+
+  <iframe src="./iframe.html" frameborder="0"></iframe>
+  <script>
+    window.frames[0].onerror = function (msg, url, row, col, error) {
+        console.log('我知道iframe错误了');
+        console.log({msg, url, row, col, error})
+        return true
+    };
+//     window.addEventListener('error',(error)=> { console.log('我知道错误了',error);
+//  },true)
+ 
+
+ 
+  </script>
+  <!-- <img src="./a.png" alt="" srcset=""> -->
+</body>
+</html>

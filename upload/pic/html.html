@@ -1,0 +1,338 @@
+#set($layout="main.vm")
+
+#define($css)
+    #mstatic('<link rel="stylesheet" href="Angora/css/order/pay_receipt.css">')
+#end
+<div class="vo-main-wrap">
+    <div class="crumb">
+        #if($!StringUtils.isNotBlank($!encryptOrdBatchId))<a href="/order">Order Manage</a>#elseif($!StringUtils.isNotBlank($!encryptBillIds))<a href="/balance/list">Manage Balance</a>#end<i class="ob-icon icon-right"></i><span>Upload Receipts</span>
+    </div>
+
+    <div class="vo-main">
+
+##        支持金额小于总额静态提示
+        <div class="m-alert J-m-alert" style="display: none;">
+            <div class="alert-con alert-err alert-state alert-full-col">
+                <span class="micon-state"><i class="ob-icon icon-error"></i></span>
+                <span class="alert-txt">The sum of payment amounts stated in all profiles should not be less than the due grand total.</span>
+            </div>
+        </div>
+##    后台验证提示
+        #if($!angoraResult.code == 10002)
+            <div class="m-alert">
+                <div class="alert-con alert-err alert-state alert-full-col">
+                    <span class="micon-state"><i class="ob-icon icon-error"></i></span>
+                    <span class="alert-txt">$!angoraResult.data</span>
+                </div>
+            </div>
+        #end
+
+
+        <div class="vo-main-title">
+            <div class="vo-main-title-text">
+                Bank Transfer Result
+            </div>
+            #if($!StringUtils.isNotBlank($!payOnlineUrl))
+            <a href="$!payOnlineUrl" target="_blank" class="btn fr">Change Payment Method</a>
+            #end
+        </div>
+        <div class="grand-total">
+            <span class="label">I've already finished the order $!orderBusiIds payment US$<em class="J-total">$!totalPayStr</em></span>
+        </div>
+        <div class="mb10">
+            <a href="javascript:;" class="J-viewBank">View Beneficiary Bank Account Information</a>
+        </div>
+
+
+        <div class="form-box block-bg">
+            <form class="m-form m-form-horizontal-span-7 J-receipt-form" method="post" action="/order/payReceipt">
+				#token($request)
+                <input type="hidden" value="$!encryptOrdBatchId" name="encryptOrdBatchId"/>
+                <input type="hidden" value="$!encryptBillIds" name="encryptBillIds"/>
+                <input type="hidden" value="$!totalPay" name="totalPay"/>
+                <input type="hidden" value="$!totalPayStr" name="totalPayStr"/>
+            <div id="J-form-inner-coat">
+
+                #foreach($!payReceiptDTO in $!payReceiptDTOList)
+                <div class="form-inner J-form-inner">
+                    <i class="ob-icon icon-error J-btn-close"></i>
+                    <div class="form-item">
+                        <label class="form-label"><em class="must">*</em>Payment Method:</label>
+                        <div class="form-fields">
+                            <div class="col-6">
+                                <select name="payMethod" id="" select-css="">
+                                    <option value=""> Please select a payment method</option>
+                                    <option value="1" #if($!payReceiptDTO.payMethod == 1) selected="selected" #end>Bank Transfer</option>
+                                    <option value="2" #if($!payReceiptDTO.payMethod == 2) selected="selected" #end>Telegraphic Transfer</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label class="form-label"><em class="must">*</em>Bank Name:</label>
+
+                        <div class="form-fields">
+                            <div class="col-6"><input type="text" class="input-text" name="bankName" value="$!payReceiptDTO.bankName"maxlength="150"></div>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label class="form-label"><em class="must">*</em>Account Holder Name/Transfer Person Name:</label>
+
+                        <div class="form-fields">
+                            <div class="col-6"><input type="text" class="input-text" name="ownerName" value= "$!payReceiptDTO.ownerName" maxlength="50"></div>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label class="form-label">Bank Account Number:</label>
+
+                        <div class="form-fields">
+                            <div class="col-6"><input type="text" class="input-text" name="backAccountNumber" value="$!payReceiptDTO.backAccountNumber" maxlength="15"></div>
+
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label class="form-label"><em class="must">*</em>Transfer Date:</label>
+                        <div class="form-fields">
+                            <div class="col-6"><input type="text" readonly="readonly" class="input-text" name="transferDate" value="$!payReceiptDTO.transferDate"></div>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label class="form-label"><em class="must">*</em>Transfer Amount:</label>
+
+                        <div class="form-fields">
+                            <div class="col-6"><input type="text" class="input-text" name="transferAccount" value="$!payReceiptDTO.transferAccount" maxlength="10"></div>
+
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label class="form-label"><em class="must">*</em>Transfer Receipt：</label>
+
+                        <div class="form-fields">
+                            <div class="col-10">
+                            ##                photo-box三种状态class：beginning,loading,loaded
+                                <div class="photo-box J-photo-box #if($!payReceiptDTO.attachPicUrl) loaded #else beginning #end">
+                                    <i class="ob-icon icon-add-l J-choose"></i>
+                                    #mstatic('<img class="icon-loading J-loading" src="/common/img/loading/loading.gif">')
+
+                                    <div class="hv-align-box J-thumb">
+                                        <div class="hv-align-inner">
+                                            <img class="thumb-img J-img" src="$!payReceiptDTO.attachPicUrl" alt="">
+                                        </div>
+                                    </div>
+
+                                ## 回执临时ID
+                                    <input type="hidden" class="J-attachId" name="attachId" value="#encrypt($!payReceiptDTO.attachId)">
+                                    <input type="hidden" class="J-attachName" name="attachName" value="$!payReceiptDTO.attachName">
+                                    <input type="hidden" class="J-attachType" name="attachType" value="$!payReceiptDTO.attachType">
+                                    <input class="J-imgUrl" type="hidden" name="imgUrl" value="$!payReceiptDTO.attachPicUrl">
+                                    <span class="uploader" id="uploader" style="display:none"></span>
+                                </div>
+
+                                <div class="feedback-block J-file-tip" wrapfor="attachId"></div>
+                                <div class="tip">Please upload the receipt in JPG, JPEG, PNG or PDF within 10MB.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                #end
+
+            </div>
+            <div class="btn-inner">
+                <div class="form-item">
+                    <label class="form-label"></label>
+
+                    <div class="form-fields">
+                        <a href="javascript:void(0)" class="J-add-transfer"><i class="ob-icon icon-add"></i>Add More Receipts(You can still add <em class="J-left-count">9</em> more receipts.)</a>
+                    </div>
+                </div>
+                <div class="form-item dialog-btn-wrap">
+                    <label class="form-label"></label>
+
+                    <div class="form-fields">
+                        <div class="col-11">
+                            <button class="J-add-submit btn btn-main btn-small">
+                                Save
+                            </button>
+                            <a class="J-add-cancel btn btn-small"  #if($!StringUtils.isNotBlank($!encryptOrdBatchId)) href="/order" #elseif($!StringUtils.isNotBlank($!encryptBillIds)) href="/balance/list" #end>Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+##
+<script type="text/html" id="bankInfoTpl">
+    <div class="bank-info">
+        <div class="m-alert mb10">
+            <div class="alert-con alert-info alert-state">
+                <span class="micon-state"><i class="ob-icon icon-info"></i></span>
+                <span class="alert-txt">
+                    Please transfer payment to the following bank account, and upload payment receipt.Please note that any transfer related charges are paid on your end.
+                </span>
+            </div>
+        </div>
+        #if($!{isUSAAccount})
+            <div class="item">
+                <label for="">Account Owner Name:</label>
+                <div class="inner">$!account.bankAccName</div>
+            </div>
+            <div class="item">
+                <label for="">Account Owner Address:</label>
+                <div class="inner">$!account.address</div>
+            </div>
+            <div class="item">
+                <label for="">Bank Name:</label>
+                <div class="inner">$!account.bankName</div>
+            </div>
+            <div class="item">
+                <label for="">Bank Routing Number:</label>
+                <div class="inner">$!account.routingNumber</div>
+            </div>
+            <div class="item">
+                <label for="">Bank Account Number:</label>
+                <div class="inner">$!account.bankAccNo</div>
+            </div>
+            <div class="item">
+                <label for="">Bank Account Type:</label>
+                <div class="inner">$!account.accountTypeDescription</div>
+            </div>
+        #else
+            <div class="item">
+                <label for="">Account Owner Name:</label>
+                <div class="inner">$!account.bankAccName</div>
+            </div>
+            <div class="item">
+                <label for="">Account Owner Address:</label>
+                <div class="inner">$!account.address</div>
+            </div>
+            <div class="item">
+                <label for="">#springMessage("label.country.or.region"):</label>
+                <div class="inner">$!countryName</div>
+            </div>
+            <div class="item">
+                <label for="">Bank Name:</label>
+                <div class="inner">$!account.bankName</div>
+            </div>
+            <div class="item">
+                <label for="">Bank Address:</label>
+                <div class="inner">$!account.bankAddress</div>
+            </div>
+            <div class="item">
+                <label for="">Bank Account Number:</label>
+                <div class="inner">$!account.bankAccNo</div>
+            </div>
+            <div class="item">
+                <label for="">Bank Account Type:</label>
+                <div class="inner">$!account.accountTypeDescription</div>
+            </div>
+            <div class="item">
+                <label for="">SWIFT Code:</label>
+                <div class="inner">$!account.swiftCode</div>
+            </div>
+        #end
+    </div>
+
+</script>
+##复用模块
+<script type="text/template" id="temp-box">
+    <div class="form-inner J-form-inner">
+        <i class="ob-icon icon-error J-btn-close"></i>
+
+
+        <div class="form-item">
+            <label class="form-label"><em class="must">*</em>Payment Method:</label>
+            <div class="form-fields">
+                <div class="col-6">
+                    <select name="payMethod" id="" select-css="">
+                        <option value=""> Please select a payment method</option>
+                        <option value="1">Bank Transfer</option>
+                        <option value="2">Telegraphic Transfer</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="form-label"><em class="must">*</em>Bank Name:</label>
+
+            <div class="form-fields">
+                <div class="col-6"><input type="text" class="input-text" name="bankName" value="" maxlength="150"></div>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="form-label"><em class="must">*</em>Account Holder Name/Transfer Person Name:</label>
+
+            <div class="form-fields">
+                <div class="col-6"><input type="text" class="input-text" name="ownerName" value= "" maxlength="50"></div>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="form-label">Bank Account Number:</label>
+
+            <div class="form-fields">
+                <div class="col-6"><input type="text" class="input-text" name="backAccountNumber" value="" maxlength="15"></div>
+
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="form-label"><em class="must">*</em>Transfer Date:</label>
+            <div class="form-fields">
+                <div class="col-6"><input type="text" readonly="readonly" class="input-text" name="transferDate" value=""></div>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="form-label"><em class="must">*</em>Transfer Amount:</label>
+
+            <div class="form-fields">
+                <div class="col-6"><input type="text" class="input-text" name="transferAccount" value="" maxlength="10"></div>
+
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="form-label"><em class="must">*</em>Transfer Receipt：</label>
+
+            <div class="form-fields">
+                <div class="col-10">
+                ##                photo-box三种状态class：beginning,loading,loaded
+                    <div class="photo-box J-photo-box beginning">
+                        <i class="ob-icon icon-add-l J-choose"></i>
+                        #mstatic('<img class="icon-loading J-loading" src="/common/img/loading/loading.gif">')
+
+                        <div class="hv-align-box J-thumb">
+                            <div class="hv-align-inner">
+                                <img class="thumb-img J-img" src="" alt="">
+                            </div>
+                        </div>
+                        ## 回执临时ID
+                        <input type="hidden" class="J-attachId" name="attachId" value="">
+                        <input type="hidden" class="J-attachName" name="attachName" value="">
+                        <input type="hidden" class="J-attachType" name="attachType" value="">
+                        <input class="J-imgUrl" type="hidden" name="imgUrl" value="">
+                        <span class="uploader" id="uploader" style="display:none"></span>
+                    </div>
+
+                    <div class="feedback-block J-file-tip" wrapfor="attachId"></div>
+                    <div class="tip">Please upload the receipt in JPG, JPEG, PNG or PDF within 10MB.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</script>
+#define($js)
+    #mstatic('<script type="text/javascript" src="common/js/libs/jquery.js"></script>')
+    #mstatic('<script type="text/javascript" src="Angora/js/global/global.js"></script>')
+    #mstatic('<script type="text/javascript" src="common/js/assets/artDialog/2.0.0/artDialog.js"></script>')
+    #mstatic('<script type="text/javascript" src="common/js/libs/jquery/jquery.validate.silk.js"></script>')
+    #mstatic('<script type="text/javascript" src="common/js/util/util.js"></script>')
+    #mstatic('<script type="text/javascript" src="common/js/assets/select2/select.js"></script>')
+    #mstatic('<script type="text/javascript" src="common/js/assets/upload/upload.silk.js"></script>')
+    #mstatic('<script type="text/javascript" src="common/js/assets/pikaDay/pikaday.2.0.0.js"></script>')
+    #mstatic('<script type="text/javascript" src="common/js/biz/bubble/bubble.js"></script>')
+    #mstatic('<script type="text/javascript" src="Angora/js/order/pay_receipt.js"></script>')
+#end

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<body>
+		<!-- <script src=".\tryCatch.js"></script> -->
+		<h2>Crashing on Chrome</h2>
+		Go to the page you want to crash <br />
+		Paste this into your url ‘chrome://crash’ <br />
+		Press Enter
+
+		<script>
+			window.addEventListener('load', function() {
+				sessionStorage.setItem('good_exit', 'pending');
+				setInterval(() => {
+					sessionStorage.setItem('time_before_crash', new Date().toString());
+				}, 1000);
+			});
+			// 当浏览器窗口关闭或者刷新时
+			window.addEventListener('beforeunload', function() {
+				sessionStorage.setItem('good_exit', 'true');
+			});
+			if (
+				sessionStorage.getItem('good_exit') &&
+				sessionStorage.getItem('good_exit') !== 'true'
+			) {
+				// insert crash logging code here
+				alert('你之前错误了' + sessionStorage.getItem('time_before_crash'));
+			}
+		</script>
+	</body>
+
+
+
+</html>

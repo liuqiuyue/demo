@@ -5,6 +5,7 @@
     function openNew(show_div) {
         var sWidth = $(document.body).width();
         var sHeight = $(document.body).height();
+
         show_div.css("display", "block").addClass("layer-anim-07");
         // $mask.css("display", "block").addClass("mask-special");
         $mask.css("display", "block");
@@ -21,11 +22,13 @@
 
         $(this).bind("click", function () {
             var a = $(".J-jump-w").eq(index);
+
             openNew(a);
             return false;
         });
     });
     var domA = [".J-fade-in-up"];
+
     sv.animationCollect(domA);
     $(window).scroll(function () {
         sv.animationCollect(domA);

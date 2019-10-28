@@ -1,5 +1,6 @@
 $(function () {
     var forms = $('form[name=searchForm]');
+
     if (forms.length > 0) {
         forms.each(function (index, item) {
             (function (_form) {
@@ -11,6 +12,7 @@ $(function () {
     function searchFormInit(form) {
         var word = form.keyword;
         //<!-- Search Form -->
+
         $(form).bind('submit', function (e) {
             // 自定义搜索按钮跳转 (input输入框如果存在该属性并且为空则忽略为空判断，直接跳转)
             if ($(word).attr('data-customLink') && $.trim(word.value) === '') {
@@ -33,6 +35,7 @@ $(function () {
         });
         function createSubmitArgs(name, value) {
             var _input = document.createElement('input');
+
             _input.type = 'hidden';
             _input.name = name;
             _input.value = value;
@@ -54,6 +57,7 @@ $(function () {
                 $('.J-header-search-clear').removeClass('active');
             }
         };
+
         $('.J-header-search-input').on('keyup', function () {
             searchInput($(this));
         }).on('focus', function () {
@@ -68,6 +72,7 @@ $(function () {
     function IndexData(data) {
         if (!data) return;
         var i = 0;
+
         try {
             for (var template in data) {
                 if (data[template] && data[template].length > 0) {
@@ -92,6 +97,7 @@ $(function () {
             attr = null,
             transCode,
             tmpStr = str;
+
         for (attr in data) {
             transCode = data[attr];
             if (typeof transCode === 'string' && (transCode.indexOf('"') !== -1 || transCode.indexOf("'") !== -1)) {
@@ -102,6 +108,7 @@ $(function () {
         }
         while ((result = r_block.exec(str)) !== null) {
             var execCode = code;
+
             execCode += result[1];
             try {
                 tmpStr = tmpStr.replace(result[0], new Function(execCode)() || '');
@@ -114,6 +121,7 @@ $(function () {
 
     function html2Elem(html) {
         var tmp = document.createElement('div');
+
         tmp.innerHTML = html;
         return tmp.childNodes[0];
     }
@@ -130,6 +138,7 @@ $(function () {
         var docfrag = document.createDocumentFragment();
         var list = '',
             highlightCls = 'bold';
+
         for (template in data) {
             if (data[template] && _template) {
                 for (i = 0, l = data[template].length; i < l; i++) {
@@ -158,6 +167,7 @@ $(function () {
     //节流
     function _debounce() {
         var _timer = null;
+
         return function (func) {
             if (_timer) {
                 clearTimeout(_timer);
@@ -216,6 +226,7 @@ $(function () {
                 $(".header-search-box").append('<div class="dropmenu-list"></div>');
             }
             var k = window.event ? evt.keyCode : evt.which;
+
             if (k == 13) {
                 myDebounce(searchWords);
                 return true;
@@ -273,9 +284,11 @@ $(function () {
        
     };
     var sy = 0;
+
     if ($('.J-header-search-input')[0]) {
         var form = $('.header-search-box');
         var startx, starty, endx, endy;
+
         $(".header-search-box").append('<div class="dropmenu-list"></div>');
         $(".dropmenu-list").hide();
         changeCoords(); //控制查询结果div坐标
@@ -287,6 +300,7 @@ $(function () {
             clearThinkWord();
         }).on("touchstart", 'a', function (e) {
             var touch = e.originalEvent.targetTouches[0];
+
             sy = touch.pageY;
             startx = touch.pageX;
             starty = touch.pageY;
@@ -295,12 +309,14 @@ $(function () {
             e.stopPropagation();
         }).on("touchmove", 'a', function (e) {
             var touch = e.originalEvent.targetTouches[0];
+
             endx = touch.pageX;
             endy = touch.pageY;
             e.stopPropagation();
             //ios移动端滑动问题解决
             var down = (touch.pageY - sy > 0);
             //top
+
             if (down && this.parentNode.scrollTop <= 0) {
                 e.preventDefault();
             }
@@ -314,6 +330,7 @@ $(function () {
             var y = endy - starty;
             var W = x < 0 ? x * -1 : x; //x轴的滑动值, w为x的绝对值
             var H = y < 0 ? y * -1 : y; //y轴的滑动值
+
             if (W < 5 && H < 5) {
                 e.preventDefault();
                 $(".J-header-search-input").val(this.getAttribute('val'));

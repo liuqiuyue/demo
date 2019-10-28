@@ -1,0 +1,211 @@
+@import "/Angora/css/global/_global";
+@import "/common/css/lib/_button";
+@import "/common/css/lib/_select";
+@import "/common/css/lib/_input";
+@import "/common/css/lib/_alert";
+@import "/common/css/module/_dialog";
+@import "/common/css/module/_form";
+@import "/common/css/module/_calendar";
+@import "/common/css/lib/_tip";
+@import "/common/css/lib/_alert";
+@import "/common/css/biz/_crumb";
+
+.FOCUS_UPLOAD_wrap {
+    display: none;
+}
+.calendar{
+    z-index: 3;
+}
+.thumb-pdf {
+    position: relative;
+    height: 100px;
+    background-color: #FFF;
+    line-height: 100px;
+    z-index: 2;
+
+    .icon-pdf {
+        font-size: 50px;
+    }
+}
+.vo-main-wrap {
+    font-size: 12px;
+}
+.vo-main-wrap {
+
+    .block-bg {
+        background: #fff;
+        box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .grand-total{
+        margin-bottom: 10px;
+        // height: 28px;
+        // line-height: 28px;
+        padding: 5px 0;
+        .label{
+            display: inline-block;
+        }
+        .num{
+            display: inline-block;
+            padding-left: 5px;
+            color: #e64545;
+        }
+    }
+    .form-box {
+        padding: 20px 40px 40px 40px;
+        .form-inner {
+            padding: 25px 25px 0 25px;
+            border: 1px dashed #ced3d9;
+            position: relative;
+            margin-top: 20px;
+            .icon-error {
+                background-color: #fff;
+                font-size: 30px;
+                position: absolute;
+                right: -15px;
+                top: -15px;
+                cursor: pointer;
+                display: none;
+            }
+
+            .photo-box {
+                width: 100px;
+                height: 100px;
+                border: 1px dashed #ced3d9;
+                background-color: #f5f7fa;
+                position: relative;
+                .icon-add-l {
+                    width: 30px;
+                    height: 30px;
+                    font-size: 30px;
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -15px;
+                    left: 50%;
+                    margin-left: -15px;
+                    color: #1470CC;
+                }
+                .icon-loading {
+                    position: absolute;
+                    top: 50%;
+                    margin-top: -30px;
+                    left: 50%;
+                    margin-left: -30px;
+                }
+                // .img-thumb {
+                //     @include hv-align(100px, 100px);
+                //     width: 100%;
+                //     height: 100%;
+                //     img {
+                //         max-width: 100%;
+                //         max-height: 100%;
+                //     }
+                // }
+
+                .hv-align-box{
+                    line-height: normal;
+                    @include hv-align(100px, 100px);
+                }
+
+            }
+            .photo-box.beginning {
+                .icon-add-l {
+                    display: block;
+                }
+                .icon-loading {
+                    display: none;
+                }
+                .img-thumb {
+                    display: none;
+                }
+            }
+            .photo-box.loading {
+                .icon-add-l {
+                    display: none;
+                }
+                .icon-loading {
+                    display: block;
+                }
+                .img-thumb {
+                    display: none;
+                }
+            }
+
+            .photo-box.loaded {
+                .icon-add-l {
+                    display: none;
+                }
+                .icon-loading {
+                    display: none;
+                }
+                .img-thumb {
+                    display: block;
+                }
+            }
+            .photo-box:hover {
+                cursor: pointer;
+                border: 1px dashed red;
+                .icon-add-l {
+                    color: red;
+                }
+            }
+            .error {
+                margin-top: 5px;
+                font-size: 12px;
+                color: #e64545;
+                display: none;
+            }
+
+            .tip {
+                font-size: 12px;
+                color: #999;
+            }
+
+        }
+        .btn-inner {
+            padding: 10px 26px 0 26px;
+            .form-item {
+                margin-bottom: 10px;
+            }
+            .btn-main{
+                margin-right: 8px;
+            }
+        }
+    }
+}
+
+
+.bank-info{
+    .m-alert{
+        margin-bottom: 20px;
+    }
+    .item{
+        min-height: 18px ;
+        margin-bottom: 10px;
+        label{
+            float: left;
+            color: #888;
+            width: 180px;
+            text-align: right;
+        }
+        .inner{
+            margin-left: 190px;
+            word-wrap: break-word;
+        }
+    }
+}
+@media screen and (max-width: 480px){
+    .bank-info{
+        .item{
+            min-height: 18px ;
+            label{
+                float: none;
+                text-align: left;
+            }
+            .inner{
+                display: inline-block;
+                margin-left: 0;
+            }
+        }
+    }
+}
