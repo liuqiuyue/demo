@@ -1,1 +1,0 @@
-(function(c,b){var a=[".J-fade-in-up",".J-in-up"];sv.animationCollect(a);b(window).scroll(function(){sv.animationCollect(a)})})(window,jQuery);
